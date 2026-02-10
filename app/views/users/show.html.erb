@@ -1,0 +1,14 @@
+<div>
+  <%= image_tag @user.get_profile_image %>
+</div>
+
+<% @tasks.each do |task| %>
+  <div>
+    <%= link_to task_path(task.id) do %>
+      <%= image_tag task.get_image if task.image.attached? %>
+    <% end %>
+    <p>投稿ユーザー画像：<%= image_tag task.user.get_profile_image %></p>
+    <p>タイトル：<%= task.title %></p>
+    <p>ユーザー名：<%= task.user.name %></p>
+  </div>
+<% end %>

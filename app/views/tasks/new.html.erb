@@ -1,4 +1,12 @@
 <h1>新規投稿</h1>
+<% if @task.errors.any? %>
+  <%= @task.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @task.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
 <%= form_with model: @task do |f| %>
   <h4>タイトル</h4>
   <%= f.text_field :title %>

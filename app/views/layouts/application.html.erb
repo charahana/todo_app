@@ -17,6 +17,8 @@
           <%= link_to 'アバウト', about_path %>
         </li>
         <li>
+          <%= link_to 'マイページ', user_path(current_user.id) %>
+        <li>
           <%= link_to 'タスク作成', new_task_path %>
         </li>
         <li>
@@ -32,6 +34,12 @@
           <%= link_to 'ログイン', new_user_session_path %>
         </li>
       <% end %>
-    <%= yield %>
+    </header>
+    <main>
+      <div>
+        <%= flash[:notice] %>
+      </div>
+      <%= yield %>
+    </main>
   </body>
 </html>
