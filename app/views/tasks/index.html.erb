@@ -4,10 +4,15 @@
   <span>
     <%= link_to task.title, task_path(task.id) %>
   </span>
+  <p>内容</p>
+  <span>
+    <%= link_to task.body, task_path(task.id) %>
+  </span>
   <p>画像</p>
   <% if task.image.attached? %>
-    <%= image_tag task.image, size: "200*200" %>
+    <%= image_tag task.image, size: "200x200" %>
   <% else %>
-    <%= image_tag 'no_image', size: "200*200" %>
+    <%= image_tag 'no_image', size: "200x200" %>
   <% end %>
+  <span><%= task.user.name %></span>
 <% end %>

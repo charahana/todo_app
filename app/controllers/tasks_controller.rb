@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: [:show, :edti, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def new
     @task = Task.new
@@ -52,6 +52,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :completed, :image)
+    params.require(:task).permit(:title, :body, :status, :priority, :due_date, :image)
   end
 end
