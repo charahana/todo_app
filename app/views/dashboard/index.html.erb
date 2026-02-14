@@ -1,2 +1,8 @@
-<h2>ダッシュボード(仮ページ)</h2>
+<h2>ダッシュボード</h2>
 <p>ようこそ　<%= current_user.name %></p>
+<h3>タスク統計</h3>
+<p>総タスク数: <%= @total_tasks %>件</p>
+<p>完了率: <%= @completion_rate %>%</p>
+<p>未着手: <%= @not_started_tasks %>件</p>
+<p>進行中: <%= @in_progress_tasks %>件</p>
+<p>完了: <%= @completed_tasks %>件</p>
