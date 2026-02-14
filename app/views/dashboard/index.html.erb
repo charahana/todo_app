@@ -1,14 +1,44 @@
-<h2>ダッシュボード</h2>
-<p>ようこそ　<%= current_user.name %></p>
-<h3>タスク統計</h3>
-<p>総タスク数: <%= @total_tasks %>件</p>
-<p>完了率: <%= @completion_rate %>%</p>
-<p>未着手: <%= @not_started_tasks %>件</p>
-<p>進行中: <%= @in_progress_tasks %>件</p>
-<p>完了: <%= @completed_tasks %>件</p>
-<h3>最近のタスク</h3>
-<ul>
-  <% @recent_tasks.each do |task| %>
-    <li><%= task.title %></li>
-  <% end %>
-</ul>
+<div class="container">
+  <h2 class="mb-3">ダッシュボード</h2>
+  <p class="text-muted">ようこそ　<%= current_user.name %></p>
+  <div class="row text-center mb-5">
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm p-4">
+        <p class="text-muted">総タスク数: <strong><%= @total_tasks %></strong>件</p>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm p-4">
+        <p class="text-muted">完了率: <%= @completion_rate %>%</p>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm p-4">
+        <p class="text-muted">未着手: <%= @not_started_tasks %>件</p>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm p-4">
+        <p class="text-muted">進行中: <%= @in_progress_tasks %>件</p>
+      </div>
+    </div>
+  </div>
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h5 class="mb-3">最近のタスク</h5>
+        <% if @recent_tasks.any? %>
+          <ul class="list-group list-group-flush">
+            <% @recent_tasks.each do |task| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><%= task.title %></span>
+                <small class="text-muted"><%= task.created_at.strftime("%m/%d") %></small>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-muted">最近追加されたタスクはありません</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
