@@ -8,4 +8,6 @@ class Task < ApplicationRecord
   validates :title, presence: true
   validates :body, presence: true
   
+  scope :recent, -> { order(created_at: :desc) }
+  scope :due_soon, -> { where(due_date: Time.current..3.days.from_now) }
 end
