@@ -13,5 +13,8 @@ class DashboardController < ApplicationController
       else
         (@completed_tasks.to_f / @total_tasks * 100).round
       end
+    @recent_tasks = tasks.recent.limit(5)
+    @due_soon_tasks = tasks.due_soon
+    @high_priority_tasks = tasks.high.limit(5)
   end
 end
