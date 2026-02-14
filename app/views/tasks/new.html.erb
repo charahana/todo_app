@@ -19,11 +19,11 @@
     </div>
     <div class="mb-3">
       <%= f.label :status, "ステータス", class: "form-label" %>
-      <%= f.select :status, Task.statuses.keys.map { |k| [k.humanize, k] }, {}, class: "form-select" %>
+      <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, {}, class: "form-select" %>
     </div>
     <div class="mb-3">
       <%= f.label :priority, "優先度", class: "form-label" %>
-      <%= f.select :priority, Task.priorities.keys.map { |k| [k.humanize, k] }, {}, class: "form-select" %>
+      <%= f.select :priority, Task.priorities.keys.map { |k| [Task.human_attribute_name("priority.#{k}"), k] }, {}, class: "form-select" %>
     </div>
     <div class="mb-3">
       <%= f.label :due_date, "期限", class: "form-label" %>
