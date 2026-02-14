@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
+  get 'dashboard/index'
   devise_for :users
   resources :tasks, only: [:new, :create, :index, :show, :edit, :update, :destroy]
   resources :users, only: [:show, :edit, :update]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root to: 'homes#top'
+  root 'dashboard#index'
   get '/about', to: 'homes#about', as: 'about'
 end
