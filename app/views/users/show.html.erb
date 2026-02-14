@@ -16,30 +16,41 @@
 
   <hr>
 
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>タイトル</th>
-        <th>内容</th>
-        <th>ステータス</th>
-        <th>期限</th>
-        <th>編集</th>
-        <th>削除</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @tasks.each do |task| %>
-        <tr>
-          <td><%= task.id %></td>
-          <td><%= task.title %></td>
-          <td><%= task.body %></td>
-          <td><%= task.status %></td>
-          <td><%= task.due_date&.strftime("%Y/%m/%d") || "未設定" %></td>
-          <td><%= link_to "編集", task_path(task) %></td>
-          <td><%= link_to "削除", task_path(task), method: :delete, data: { confirm: "本当に削除しますか？"} %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <h2>TODOリスト</h2>
+  <div class="row">
+    <% @tasks.each do |task| %>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5>すべての件数</h5>
+            <p><%= current_user.tasks.count %>件</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5>完了タスク数</h5>
+            <p><%= Task.where(status: 'done').count %>件</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5>未完了タスク数</h5>
+            <p><%= Task.where(status: 'not_started').count %>件</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5>最近のタスク<h5>
+            <p><%= Task.where(created_at: 1.week.ago..Time.zone.now) %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
