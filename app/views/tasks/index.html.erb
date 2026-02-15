@@ -8,6 +8,7 @@
         <th>タイトル</th>
         <th>内容</th>
         <th>ステータス</th>
+        <th>優先度</th>
         <th>期限</th>
         <th>編集</th>
         <th>削除</th>
@@ -19,7 +20,8 @@
           <td><%= task.id %></td>
           <td><%= task.title %></td>
           <td><%= task.body %></td>
-          <td><%= task.status %></td>
+          <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
+          <td><%= I18n.t("enums.task.priority.#{task.priority}") %></td>
           <td><%= task.due_date&.strftime("%Y/%m/%d") || "未設定" %></td>
           <td><%= link_to "編集", task_path(task) %></td>
           <td><%= link_to "削除", task_path(task), method: :delete, data: { confirm: "本当に削除しますか？"} %></td>
