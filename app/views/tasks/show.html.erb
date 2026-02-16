@@ -1,10 +1,28 @@
-<h2>タイトル</h2>
-<p><%= @task.title %></p>
-<h2>画像</h2>
-<% if @task.image.attached? %>
-  <%= image_tag @task.image, size: "200x200" %>
-<% else %>
-  <%= image_tag 'no_image', size: "200x200" %>
-<% end %>
-<%= link_to '編集', edit_task_path(@task) %>
-<%= link_to '削除', task_path(@task), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+<div class="container">
+  <h1 class="mb-4 border-left border-primary pl-3"><%= @task.title %></h1>
+  <div class="card mb-4">
+    <div class="card-body">
+      <p class="mb-3"><strong>内容:</strong><%= simple_format(@task.body) %></p>
+      <p><strong>ステータス:</strong><span class="badge badge-info"><%= I18n.t("enums.task.status.#{@task.status}") %></span></p>
+      <p><strong>優先度:</strong><span class="badge badge-warning"><%= I18n.t("enums.task.priority.#{@task.priority}") %></span></p>
+      <p>
+        <strong>期限:</strong>
+        <span class="<%= 'text-danger font-weight-bold' if @task.due_date.present? && @task.due_date < Time.current %>">
+          <%= @task.due_date&.strftime("%Y/%m/%d %H:%M") || "未設定" %>
+        </span>
+      </p>
+      <% if @task.image.attached? %>
+        <%= image_tag @task.image, size: "200x200" %>
+      <% else %>
+        <%= image_tag 'no_image', size: "200x200" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between">
+    <%= link_to "戻る", tasks_path, class: "btn btn-outline-secondary" %>
+    <div>
+      <%= link_to '編集', edit_task_path(@task), class: "btn btn-primary" %>
+      <%= link_to '削除', task_path(@task), method: :delete, "data-confirm" => "本当に削除しますか？", class: "btn btn-denger" %>
+    </div>
+  </div>
+</div>
