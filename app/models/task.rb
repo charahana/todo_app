@@ -9,8 +9,27 @@ class Task < ApplicationRecord
   validates :body, presence: true, length: { maximum: 1000 }
   validate :due_date_cannot_be_in_the_past
   
-  scope :recent, -> { order(created_at: :desc) }
-  scope :due_soon, -> { where(due_date: Time.current..3.days.from_now) }
+  #--スコープ--
+  scope :recent, -> {
+    order(created_at: :desc)
+  }
+
+  scope :due_soon, -> {
+    where(due_date: Time.current..3.days.from_now)
+  }
+
+  scope :search, -> (keyword) {
+    where("title LIKE ? OR body LIKE ?", "%#{keyword}%", "%#{keyword}%") if keyword.present?
+  }
+
+  scope :filter_status, -> (status) {
+    where(status: status) if status.present?
+  }
+
+  scope :filter_priority, => (priority) {
+    where(priority: priority) if priority.present?
+  }
+#---------------
 
   def due_date_cannot_be_in_the_past
     return if due_date.blank?
