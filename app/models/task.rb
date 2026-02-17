@@ -37,7 +37,7 @@ class Task < ApplicationRecord
   scope :filter_priority, -> (priority) {
     where(priority: priority) if priority.present?
   }
-#---------------
+  #---------------
 
   def due_date_cannot_be_in_the_past
     return if due_date.blank?
@@ -45,5 +45,11 @@ class Task < ApplicationRecord
     if due_date < Time.current
       errors.add(:due_date, "は現在より未来の日時を設定してください")
     end
+  end
+
+  def overdue?
+    return false if due_date.blank?
+    return false if done?
+    due_date < Time.current
   end
 end
