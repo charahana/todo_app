@@ -14,6 +14,14 @@ class Task < ApplicationRecord
     order(created_at: :desc)
   }
 
+  scope :due_date_asc, -> {
+    order(due_date: :asc)
+  }
+
+  scope :priority_desc, -> {
+    order(priority: :desc)
+  }
+
   scope :due_soon, -> {
     where(due_date: Time.current..3.days.from_now)
   }
