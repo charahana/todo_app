@@ -18,14 +18,24 @@ class TasksController < ApplicationController
   end
 
   def index
-    @tasks = current_user.tasks.order(created_at: :desc)
-    @tasks = @tasks.search(params[:keyword])
-                   .filter_status(params[:status])
-                   .filter_priority(params[:priority])
-                   .recent
+    @tasks = current_user.tasks
+                         .search(params[:keyword])
+                         .filter_status(params[:status])
+                         .filter_priority(params[:priority])
+
+    case params[:sort]
+    when "due_date"
+      @tasks = @tasks.order(due_date: :asc)
+    when "priority"
+      @tasks = @tasks.order(priority: :desc)
+    else
+      @tasks = @tasks.order(created_at: :desc)
+    end
+
     @keyword = params[:keyword]
     @status = params[:status]
     @priority = params[:priority]
+    @sort = params[:sort]
   end
 
   def show
