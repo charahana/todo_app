@@ -32,7 +32,7 @@ class TasksController < ApplicationController
       @tasks = @tasks.order(created_at: :desc)
     end
 
-    @tasks = current_user.tasks.page(params[:page]).per(10)
+    @tasks = @tasks.page(params[:page]).per(10)
 
     @keyword = params[:keyword]
     @status = params[:status]
