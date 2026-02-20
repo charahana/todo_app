@@ -1,6 +1,6 @@
 <div class="container">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 mb-0>TODOリスト</h1>
+    <h1 class="mb-0">TODOリスト</h1>
     <%= link_to "タスク作成", new_task_path, class: "btn btn-primary" %>
   </div>
   <%= form_with url: tasks_path, method: :get, local: true, class: "mb-3 form-inline" do |f| %>
