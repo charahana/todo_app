@@ -73,8 +73,6 @@ Capybara.register_driver :selenium_chrome_headless do |app|
   options.add_argument('--no-sandbox')
   options.add_argument('--window-size=1400,1400')
 
-  # Chromeのパスを明示したい場合はここで指定
-  # options.binary = '/usr/bin/google-chrome'
   options.binary = "C:/Program Files/Google/Chrome/Application/chrome.exe"
 
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
