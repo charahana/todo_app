@@ -34,7 +34,7 @@
     </thead>
     <tbody>
       <% @tasks.each_with_index do |task, index| %>
-        <tr class="<%= 'table-danger' if task.overdue? %>">
+        <tr class="task-row <%= 'table-danger' if task.overdue? %>">
           <td><%= index + 1 %></td>
           <td><%= link_to task.title, task_path(task), class: "font-weight-bold text-dark" %></td>
           <td><%= task.body %></td>
