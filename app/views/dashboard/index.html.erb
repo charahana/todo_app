@@ -10,6 +10,21 @@
     end
   %>
 
+  <% if @overdue_tasks.any? %>
+    <div class="card border-danger mb-4">
+      <div class="card-body">
+        <h5 class="text-danger">期限切れタスク</h5>
+        <ul>
+          <% @overdue_tasks.each do |task| %>
+            <li class="text-danger"><%= task.title %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% else %>
+    <p class="text-success">期限切れタスクはありません</p>
+  <% end %>
+
   <div class="row text-center mb-5">
     <div class="col-md-3 mb-3">
       <div class="card shadow-sm p-4 h-100">
