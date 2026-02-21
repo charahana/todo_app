@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'dashboard/index'
   devise_for :users
   resources :tasks, only: [:new, :create, :index, :show, :edit, :update, :destroy]
   resources :users, only: [:show, :edit, :update]
