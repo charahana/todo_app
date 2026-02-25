@@ -2,8 +2,9 @@
 <p><%= @task.title %></p>
 <h2>画像</h2>
 <% if @task.image.attached? %>
-  <%= image_tag @task.image, size: "200*200" %>
+  <%= image_tag @task.image, size: "200x200" %>
 <% else %>
-  <%= image_tag 'no_image', size: "200*200" %>
+  <%= image_tag 'no_image', size: "200x200" %>
 <% end %>
-<%= link_to '編集', edit_task_path(@task.id) %>
+<%= link_to '編集', edit_task_path(@task) %>
+<%= link_to '削除', task_path(@task), method: :delete, "data-confirm" => "本当に削除しますか？" %>
