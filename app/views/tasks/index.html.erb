@@ -1,11 +1,17 @@
 <div class="container">
-  <h1>TODOリスト</h1>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 mb-0>TODOリスト</h1>
+    <%= link_to "タスク作成", new_task_path, class: "btn btn-primary" %>
+  </div>
   <%= form_with url: tasks_path, method: :get, local: true do |f| %>
-    <%= f.text_field :keyword, placeholder: "キーワード検索" %>
-    <%= f.submit "検索" %>
+    <div class="input-group mb-3">
+      <%= f.text_field :keyword, placeholder: "キーワード検索", class: "form-control" %>
+      <div class="input-group-append">
+        <%= f.submit "検索", class: "btn btn-outline-secondary" %>
+      </div>
+    </div>
   <% end %>
   <hr>
-  <%= link_to "タスク作成", new_task_path, class: "btn btn-primary mb-3" %>
   <table class="table table-hover">
     <thead>
       <tr>
