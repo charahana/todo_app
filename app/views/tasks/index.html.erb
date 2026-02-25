@@ -15,9 +15,9 @@
       </tr>
     </thead>
     <tbody>
-      <% @tasks.each do |task| %>
+      <% @tasks.each_with_index do |task, index| %>
         <tr>
-          <td><%= task.id %></td>
+          <td><%= index + 1 %></td>
           <td><%= task.title %></td>
           <td><%= task.body %></td>
           <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
