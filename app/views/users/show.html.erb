@@ -9,48 +9,18 @@
       <% end %>
       <div class="profile-info">
         <p><%= @user.name %></p>
+        <p><%= @user.email %></p>
+        <p><%= @user.created_at.strftime("%Y/%m/%d") %></p>
         <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-primary" %>
       </div>
     </div>
-  </div>
-
-  <hr>
-
-  <h2>TODOリスト</h2>
-  <div class="row">
-    <% @tasks.each do |task| %>
-      <div class="col-md-6">
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5>すべての件数</h5>
-            <p><%= current_user.tasks.count %>件</p>
-          </div>
-        </div>
+    <div class="card">
+      <div class="card-body">
+        <h5>アカウント情報</h5>
+        <p>作成タスク数: <%= @tasks_count %>件</p>
+        <%= link_to "パスワード変更", edit_user_registration_path, class: "btn btn-outline-secondary" %>
       </div>
-      <div class="col-md-6">
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5>完了タスク数</h5>
-            <p><%= Task.where(status: 'done').count %>件</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5>未完了タスク数</h5>
-            <p><%= Task.where(status: 'not_started').count %>件</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5>最近のタスク<h5>
-            <p><%= Task.where(created_at: 1.week.ago..Time.zone.now) %></p>
-          </div>
-        </div>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>
+      
