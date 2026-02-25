@@ -1,25 +1,47 @@
 <div class="container">
   <h2 class="mb-3">ダッシュボード</h2>
   <p class="text-muted">ようこそ　<%= current_user.name %></p>
+
+  <% bar_color =
+    case @completion_rate
+    when 0..29 then "bg-danger"
+    when 30..69 then "bg-info"
+    else "bg-success"
+    end
+  %>
+
   <div class="row text-center mb-5">
     <div class="col-md-3 mb-3">
-      <div class="card shadow-sm p-4">
-        <p class="text-muted">総タスク数: <strong><%= @total_tasks %></strong>件</p>
+      <div class="card shadow-sm p-4 h-100">
+        <p class="text-muted">総タスク数</p>
+        <h2 class="fw-bold"><%= @total_tasks %></h2>
       </div>
     </div>
     <div class="col-md-3 mb-3">
       <div class="card shadow-sm p-4">
-        <p class="text-muted">完了率: <%= @completion_rate %>%</p>
+        <p class="text-muted">完了率</p>
+        <h2 class="fw-bold"><%= @completion_rate %>%</h2>
+        <div class="progress mt-3" style="height: 10px;">
+          <div class="progress-bar <%= bar_color %>" 
+            role="progressbar"
+            style="width: <%= @completion_rate %>%;" 
+            aria-valuenow="<%= @completion_rate %>" 
+            aria-valuemin="0" 
+            aria-valuemax="100">
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-3 mb-3">
-      <div class="card shadow-sm p-4">
-        <p class="text-muted">未着手: <%= @not_started_tasks %>件</p>
+      <div class="card shadow-sm p-4 h-100">
+        <p class="text-muted">未着手</p>
+        <h2 class="fw-bold"><%= @not_started_tasks %></h2>
       </div>
     </div>
     <div class="col-md-3 mb-3">
-      <div class="card shadow-sm p-4">
-        <p class="text-muted">進行中: <%= @in_progress_tasks %>件</p>
+      <div class="card shadow-sm p-4 h-100">
+        <p class="text-muted">進行中</p>
+        <h2 class="fw-bold"><%= @in_progress_tasks %></h2>
       </div>
     </div>
   </div>
