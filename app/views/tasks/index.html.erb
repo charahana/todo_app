@@ -36,7 +36,7 @@
       <% @tasks.each_with_index do |task, index| %>
         <tr class="task-row <%= 'table-danger' if task.overdue? %>">
           <td><%= index + 1 %></td>
-          <td><%= link_to task.title, task_path(task), class: "font-weight-bold text-dark" %></td>
+          <td><%= link_to task.title, task_path(task, from: "index"), class: "font-weight-bold text-dark" %></td>
           <td><%= task.body %></td>
           <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
           <td><%= I18n.t("enums.task.priority.#{task.priority}") %></td>
