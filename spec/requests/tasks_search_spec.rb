@@ -5,25 +5,50 @@ RSpec.describe "タスク検索機能", type: :request do
 
   before do
     sign_in user
-
-    create(:task, user: user, title: "Ruby学習")
-    create(:task, user: user, title: "Rails学習")
-    create(:task, user: user, title: "Java勉強")
   end
 
-  it "キーワードで部分一致検索できる" do
-    get tasks_path(keyword: "学習")
+  context "キーワード検索" do
+    before do
+      # 検索対象と非対象のタスクを作成
+      create(:task, user: user, title: "Ruby学習")
+      create(:task, user: user, title: "Rails学習")
+      create(:task, user: user, title: "Java勉強")
+    end
 
-    expect(response.body).to include("Ruby学習")
-    expect(response.body).to include("Rails学習")
-    expect(response.body).not_to include("Java勉強")
+    it "部分一致で検索できる" do
+      get tasks_path(keyword: "学習")
+
+      expect(response.body).to include("Ruby学習")
+      expect(response.body).to include("Rails学習")
+      expect(response.body).not_to include("Java勉強")
+    end
+
+    it "検索結果0件の場合は何も表示されない" do
+      get tasks_path(keyword: "Python")
+
+      expect(response.body).not_to include("Ruby学習")
+      expect(response.body).not_to include("Rails学習")
+      expect(response.body).not_to include("Java勉強")
+    end
   end
 
-  it "検索結果が0件の場合は表示されない" do
-    get tasks_path(keyword: "Python")
+  context "検索 + ページネーション" do
+    before do
+      # 15件作って、1ページ10件、2ページ5件にする
+      create_list(:task, 15, user: user, title: "Ruby")
+    end
 
-    expect(response.body).not_to include("Ruby学習")
-    expect(response.body).not_to include("Rails学習")
-    expect(response.body).not_to include("Java勉強")
+    it "検索結果1ページ目には10件表示される" do
+      get tasks_path(keyword: "Ruby", page: 1)
+
+      # HTMLの<tr>タグを数える
+      expect(response.body.scan("task-row").count).to eq 10
+    end
+
+    it "検索結果2ページ目には残り5件表示される" do
+      get tasks_path(keyword: "Ruby", page: 2)
+
+      expect(response.body.scan("task-row").count).to eq 5
+    end
   end
 end
