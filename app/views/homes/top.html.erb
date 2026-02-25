@@ -1,1 +1,29 @@
-<h1>トップページです</h1>
+<div class="container py-5">
+  <div class="text-center py-5">
+    <h1 class="fw-bold mb-3">タスクを整理して進捗を管理する</h1>
+    <p class="lead text-muted mb-4">シンプルで安全な設計を意識したTODOアプリ</p>
+    <%= link_to "新規登録", new_user_registration_path, class: "btn btn-dark btn-lg me-3 px-4" %>
+    <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-dark btn-lg px-4" %>
+  </div>
+  <div class="row text-center py-5">
+    <div class="col-md-4 mb-4">
+      <i class="fas fa-shield-alt fa-2x mb-3 text-dark"></i>
+      <h5>安全な認証・認可</h5>
+      <p class="small text-muted">Deviseとcurrent_userを用いた設計で、ユーザーごとのデータを安全に管理できる。</p>
+    </div>
+    <div class="col-md-4 mb-4">
+      <i class="fas fa-search fa-2x mb-3 text-dark"></i>
+      <h5>柔軟な検索機能</h5>
+      <p class="small text-muted">scopeを活用し、検索・絞り込み・並び替えを実装しました。</p>
+    </div>
+    <div class="col-md-4 mb-4">
+      <i class="fas fa-vial fa-2x mb-3 text-dark"></i>
+      <h5>RSpecによるテスト</h5>
+      <p class="small text-muted">model/request/system specでアプリの安全性を確保しております。</p>
+    </div>
+  </div>
+  <div class="text-center py-5">
+    <h4 class="mb-3">開発ポリシー</h4>
+    <p class="text-muted col-md-8 mx-auto">動くだけではなく、「なぜその設計にするのか」を重視し、安全性と保守性を意識し、テストで品質を担保しています。</p>
+  </div>
+</div>
