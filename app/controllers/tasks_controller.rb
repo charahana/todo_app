@@ -19,12 +19,13 @@ class TasksController < ApplicationController
 
   def index
     @tasks = current_user.tasks.order(created_at: :desc)
-    if params[:keyword].present?
-      @task = @tasks.where("title LIKE ? OR body LIKE ?",
-                           "%#{params[:keyword]}%",
-                           "%#{params[:keyword]}%")
-    end
-    @tasks = @tasks.recent
+    @tasks = @tasks.search(params[:keyword])
+                   .filter_status(params[:status])
+                   .filter_priority(params[:priority])
+                   .recent
+    @keyword = params[:keyword]
+    @status = params[:status]
+    @priority = params[:priority]
   end
 
   def show

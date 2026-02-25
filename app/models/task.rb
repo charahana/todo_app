@@ -26,7 +26,7 @@ class Task < ApplicationRecord
     where(status: status) if status.present?
   }
 
-  scope :filter_priority, => (priority) {
+  scope :filter_priority, -> (priority) {
     where(priority: priority) if priority.present?
   }
 #---------------
