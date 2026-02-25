@@ -18,13 +18,13 @@
       <% @tasks.each_with_index do |task, index| %>
         <tr>
           <td><%= index + 1 %></td>
-          <td><%= task.title %></td>
+          <td><%= link_to task.title, task_path(task), class: "font-weight-bold text-dark" %></td>
           <td><%= task.body %></td>
           <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
           <td><%= I18n.t("enums.task.priority.#{task.priority}") %></td>
           <td><%= task.due_date&.strftime("%Y/%m/%d") || "未設定" %></td>
-          <td><%= link_to "編集", task_path(task) %></td>
-          <td><%= link_to "削除", task_path(task), method: :delete, data: { confirm: "本当に削除しますか？"} %></td>
+          <td><%= link_to "編集", edit_task_path(task), class: "btn btn-sm btn-primary" %></td>
+          <td><%= link_to "削除", task_path(task), method: :delete, data: { confirm: "本当に削除しますか？"}, class: "btn btn-sm btn-danger" %></td>
         </tr>
       <% end %>
     </tbody>
