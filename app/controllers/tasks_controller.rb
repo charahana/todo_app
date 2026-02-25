@@ -32,6 +32,8 @@ class TasksController < ApplicationController
       @tasks = @tasks.order(created_at: :desc)
     end
 
+    @tasks = @tasks.page(params[:page]).per(10)
+
     @keyword = params[:keyword]
     @status = params[:status]
     @priority = params[:priority]
