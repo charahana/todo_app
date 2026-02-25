@@ -8,6 +8,10 @@
   <span>
     <%= link_to task.body, task_path(task.id) %>
   </span>
+  <p>ステータス</p>
+  <p><%= task.status %></p>
+  <p>期限</p>
+  <p><%= task.due_date&.strftime("%Y-%m-%d") || "未設定" %></p>
   <p>画像</p>
   <% if task.image.attached? %>
     <%= image_tag task.image, size: "200x200" %>
