@@ -9,3 +9,17 @@ ja:
         low: "低"
         medium: "中"
         high: "高"
+
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        title: タイトル
+        body: 内容
+
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      blank: を入力してください
+      taken: は既に存在します

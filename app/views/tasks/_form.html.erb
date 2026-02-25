@@ -7,6 +7,9 @@
           <li><%= message %></li>
         <% end %>
       </ul>
+      <button type="button" class="close" data-dismiss="alert">
+        <span>&times;</span>
+      </button>
     </div>
   <% end %>
   <%= form_with model: @task do |f| %>
