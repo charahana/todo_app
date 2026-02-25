@@ -1,14 +1,45 @@
-<div>
-  <%= image_tag @user.get_profile_image %>
-</div>
-
-<% @tasks.each do |task| %>
-  <div>
-    <%= link_to task_path(task.id) do %>
-      <%= image_tag task.get_image if task.image.attached? %>
-    <% end %>
-    <p>投稿ユーザー画像：<%= image_tag task.user.get_profile_image %></p>
-    <p>タイトル：<%= task.title %></p>
-    <p>ユーザー名：<%= task.user.name %></p>
+<div class="container">
+  <div class="profile-section">
+    <h2>マイページ</h2>
+    <div class="profile-box">
+      <% if @user.profile_image.attached? %>
+        <%= image_tag @user.profile_image, size: "100x100", class: "profile-image" %>
+      <% else %>
+        <%= image_tag "no_image.jpg", size: "100x100", class: "profile-image" %>
+      <% end %>
+      <div class="profile-info">
+        <p><%= @user.name %></p>
+        <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-primary" %>
+      </div>
+    </div>
   </div>
-<% end %>
+
+  <hr>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>タイトル</th>
+        <th>内容</th>
+        <th>ステータス</th>
+        <th>期限</th>
+        <th>編集</th>
+        <th>削除</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.id %></td>
+          <td><%= task.title %></td>
+          <td><%= task.body %></td>
+          <td><%= task.status %></td>
+          <td><%= task.due_date&.strftime("%Y/%m/%d") || "未設定" %></td>
+          <td><%= link_to "編集", task_path(task) %></td>
+          <td><%= link_to "削除", task_path(task), method: :delete, data: { confirm: "本当に削除しますか？"} %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
