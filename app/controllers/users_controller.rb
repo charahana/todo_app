@@ -5,10 +5,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    redirect_to about_path unless @user == current_user
+    @user = current_user
   end
 
   def update
+    @user = current_user
     if @user.update(user_params)
       redirect_to show_users_path, notice: "プロフィールを更新しました"
     else
