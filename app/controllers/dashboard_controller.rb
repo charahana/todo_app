@@ -16,5 +16,6 @@ class DashboardController < ApplicationController
     @recent_tasks = tasks.recent.limit(5)
     @due_soon_tasks = tasks.due_soon.limit(5)
     @high_priority_tasks = tasks.high.limit(5)
+    @overdue_tasks = tasks.select(&:overdue?)
   end
 end
