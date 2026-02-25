@@ -1,0 +1,9 @@
+<h2>タイトル</h2>
+<p><%= @task.title %></p>
+<h2>画像</h2>
+<% if @task.image.attached? %>
+  <%= image_tag @task.image, size: "200*200" %>
+<% else %>
+  <%= image_tag 'no_image', size: "200*200" %>
+<% end %>
+<%= link_to '編集', edit_task_path(@task.id) %>

@@ -1,0 +1,13 @@
+<h1>タスク一覧</h1>
+<% @tasks.each do |task| %>
+  <p>タイトル</p>
+  <span>
+    <%= link_to task.title, task_path(task.id) %>
+  </span>
+  <p>画像</p>
+  <% if task.image.attached? %>
+    <%= image_tag task.image, size: "200*200" %>
+  <% else %>
+    <%= image_tag 'no_image', size: "200*200" %>
+  <% end %>
+<% end %>
