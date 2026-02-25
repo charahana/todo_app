@@ -16,8 +16,8 @@ RailsのMVC構造やRESTful設計を実践的に理解するため、
 ### 設計
 データ設計
 - User has_many :tasks
-- Task belongs_to :User  
-1対多の関係を設計し、User_idで紐づけています。
+- Task belongs_to :user  
+1対多の関係を設計し、user_idで紐づけています。
 タスクの作成時にはcurrent_user.tasks.buildを使用し、
 他のユーザーのデータが紐づかない設計にしています。
 ​
@@ -41,11 +41,11 @@ controllerではスコープを組み合わせてクエリを構築していま�
 ページネーションと検索の同時利用を考慮したテストも実装しました。
 
 ### テスト
-Rspecを導入し、以下の4点を実装しています。
-- mldel spec(バリデーション)
+RSpecを導入し、以下の4点を実装しています。
+- model spec(バリデーション)
 - request spec(認可・アクセス制御)
 - system spec(E2Eテスト)
-- facoryBotによるテストデータ生成  
+- FactoryBotによるテストデータ生成  
 特に「他のユーザーのデータを操作できないこと」を重点的にテストしています。
 
 ### 学習で苦労した点
