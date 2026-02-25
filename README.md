@@ -60,6 +60,9 @@ RSpecを導入し、以下の4点を実装しています。
 - PostgreSQL
 - HTML / CSS
 - JavaScript（jQuery）
+
+## ER図
+- [![ER Diagram](docs/er_diagram.svg)
 ​
 ## 開発環境
 - OS：Linux(CentOS)
