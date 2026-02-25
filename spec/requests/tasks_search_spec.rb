@@ -9,7 +9,6 @@ RSpec.describe "タスク検索機能", type: :request do
 
   context "キーワード検索" do
     before do
-      # 検索対象と非対象のタスクを作成
       create(:task, user: user, title: "Ruby学習")
       create(:task, user: user, title: "Rails学習")
       create(:task, user: user, title: "Java勉強")
@@ -34,14 +33,12 @@ RSpec.describe "タスク検索機能", type: :request do
 
   context "検索 + ページネーション" do
     before do
-      # 15件作って、1ページ10件、2ページ5件にする
       create_list(:task, 15, user: user, title: "Ruby")
     end
 
     it "検索結果1ページ目には10件表示される" do
       get tasks_path(keyword: "Ruby", page: 1)
-
-      # HTMLの<tr>タグを数える
+      
       expect(response.body.scan("task-row").count).to eq 10
     end
 

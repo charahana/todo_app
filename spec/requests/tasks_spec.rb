@@ -49,14 +49,14 @@ RSpec.describe "Tasks", type: :request do
           patch task_path(task), params: { task: { title: "変更タイトル" } }
         }.to raise_error(ActiveRecord::RecordNotFound)
 
-        expect(task.reload.title).to eq("他人のタスク") # タイトルは変わらない
+        expect(task.reload.title).to eq("他人のタスク")
       end
     end
 
     context "DELETE /tasks/:id (削除)" do
       it "削除できず例外が発生する" do
         expect { delete task_path(task) }.to raise_error(ActiveRecord::RecordNotFound)
-        expect(Task.exists?(task.id)).to be true # タスクは残る
+        expect(Task.exists?(task.id)).to be true 
       end
     end
   end
