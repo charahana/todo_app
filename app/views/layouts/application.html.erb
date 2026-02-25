@@ -14,36 +14,38 @@
   <body class="d-flex flex-column min-vh-100 bg-light">
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #ff7f50;">
-        <div class="container d-flex align-items-center justify-content-between">
-          <div class="d-flex align-items-center">
-            <div class="collapse navbar-collapse pe-4" id="navbarNav">
-              <ul class="navbar-nav ms-auto">
-                <% if user_signed_in? %>
-                  <li class="nav-item">
-                    <%= link_to 'アバウト', about_path, class: "nav-link text-white" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to 'マイページ', user_path(current_user.id), class: "nav-link text-white" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to 'タスク作成', new_task_path, class: "nav-link text-white" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to 'タスク一覧', tasks_path, class: "nav-link text-white" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "nav-link text-white" %>
-                  </li>
-                <% else %>
-                  <li class="nav-item">
-                    <%= link_to '新規登録', new_user_registration_path, class: "nav-link text-white" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to 'ログイン', new_user_session_path, class: "nav-link text-white" %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
+        <div class="container">
+          <%= link_to "TodoApp", root_path, class: "navbar-brand fw-bold" %>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <% if user_signed_in? %>
+                <li class="nav-item">
+                  <%= link_to 'アバウト', about_path, class: "nav-link text-white" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to 'マイページ', user_path(current_user.id), class: "nav-link text-white" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to 'タスク作成', new_task_path, class: "nav-link text-white" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to 'タスク一覧', tasks_path, class: "nav-link text-white" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "nav-link text-white" %>
+                </li>
+              <% else %>
+                <li class="nav-item">
+                  <%= link_to '新規登録', new_user_registration_path, class: "nav-link text-white" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to 'ログイン', new_user_session_path, class: "nav-link text-white" %>
+                </li>
+              <% end %>
+            </ul>
           </div>
         </div>
       </nav>
@@ -61,5 +63,11 @@
         <%= yield %>
       </div>
     </main>
+    <footer class="bg-dark text-light py-4 mt-auto">
+      <div class="container text-center">
+        <p class="mb-1">© 2026 TodoApp</p>
+        <p class="small text-muted">Developed by Hanaoka</p>
+      </div>
+    </footer>
   </body>
 </html>
