@@ -6,3 +6,9 @@
 <p>未着手: <%= @not_started_tasks %>件</p>
 <p>進行中: <%= @in_progress_tasks %>件</p>
 <p>完了: <%= @completed_tasks %>件</p>
+<h3>最近のタスク</h3>
+<ul>
+  <% @recent_tasks.each do |task| %>
+    <li><%= task.title %></li>
+  <% end %>
+</ul>
