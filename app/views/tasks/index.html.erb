@@ -13,6 +13,9 @@
     <div class="form-group mr-2">
       <%= f.select :priority, options_for_select(Task.priorities.keys.map { |p| [I18n.t("enums.task.priority.#{p}"), p] }, @priority), { include_blank: "優先度" }, class: "form-control" %>
     </div>
+    <div class="form-group mr-2">
+      <%= f.select :sort, options_for_select([["作成日が新しい順", "recent"], ["期限が近い順", "due_date"], ["優先度が高い順", "priority"]], @sort), {}, class: "form-control" %>
+    </div>
     <%= f.submit "検索", class: "btn btn-outline-primary" %>
   <% end %>
   <hr>
