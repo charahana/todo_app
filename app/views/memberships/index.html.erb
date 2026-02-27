@@ -1,42 +1,73 @@
-<h1>Memberships</h1>
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Role</th>
-      <% if @organization.admin?(current_user) %>
-        <th>Change</th>
-        <th>Remove</th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% @memberships.each do |membership| %>
-      <tr>
-        <td><%= membership.user.email %></td>
-        <td>
-          <% if membership.admin? %>
-            Admin
-          <% else %>
-            Member
-          <% end %>
-        </td>
-        <% if @organization.admin?(current_user) %>
-          <td>
-            <% unless membership.user == current_user %>
-              <%= form_with url: organization_membership_path(@organization, membership), method: :patch, local: true do |f| %>
-                <%= hidden_field_tag :role, membership.admin? ? :member : :admin %>
-                <%= f.submit membership.admin? ? "Make Member" : "Make Admin" %>
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Members</h2>
+    <span class="badge bg-secondary"><%= @memberships.count %> Members</span>
+  </div>
+  <div class="card shodow-sm">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>User</th>
+            <th>Role</th>
+            <% if @organization.admin?(current_user) %>
+              <th class="text-center">Change Role</th>
+              <th class="text-center">Remove</th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @memberships.each do |membership| %>
+            <tr>
+              <td>
+                <div class="fw-semibold">
+                  <%= membership.user.email %>
+                </div>
+              </td>
+              <td>
+                <% if membership.admin? %>
+                  <span class="badge bg-primary">Admin</span>
+                <% else %>
+                  <spam class="badge bg-secondary">Member</span>
+                <% end %>
+              </td>
+              <% if @organization.admin?(current_user) %>
+                <td class="text-center">
+                  <% unless membership.user == current_user %>
+                    <%= form_with url: organization_membership_path(@organization, membership), method: :patch, local: true, class: "d-inline" do %>
+                      <%= hidden_field_tag :role, membership.admin? ? :member : :admin %>
+                      <%= submit_tag(membership.admin? ? "Demote" : "Promote", class: membership.admin? ? "btn btn-sm btn-outline-warning" : "btn btn-sm btn-outline-success") %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td class="text-center">
+                  <% unless membership.user == current_user %>
+                    <%= button_to "Remove", organization_membership_path(@organization, membership), method: :delete, form: { class: "d-inline" }, data: { confirm: "削除しても問題ないですか？" }, class: "btn btn-sm btn-outline-danger" %>
+                  <% end %>
+                </td>
               <% end %>
-            <% end %>
-          </td>
-          <td>
-            <% unless membership.user == current_user %>
-              <%= button_to "Remove", organization_membership_path(@organization, membership), method: :delete, data: { confirm: "削除しても問題ないですか？" } %>
-            <% end %>
-          </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <% if @organization.admin?(current_user) %>
+    <div class="card shadow-sm mt-4">
+      <div class="card-body">
+        <h5 class="mb-3">追加メンバー</h5>
+        <%= form_with url: organization_memberships_path(@organization), local: true, class: "row g-3" do %>
+          <div class="col-md-5">
+            <%= select_tag :user_id, options_from_collection_for_select(User.all - @organization.users, :id, :email), class: "form-select" %>
+          </div>
+          <div class="col-md-3">
+            <%= select_tag :role, options_for_select([["Member", "member"], ["Admin", "admin"]]), class: "form-select" %>
+          </div>
+          <div class="col-md-2">
+            <%= submit_tag "追加", class: "btn btn-primary w-100" %>
+          </div>
         <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      </div>
+    </div>
+  <% end %>
+</div>
