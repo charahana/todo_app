@@ -1,1 +1,42 @@
 <h1>Memberships</h1>
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Role</th>
+      <% if @organization.admin?(current_user) %>
+        <th>Change</th>
+        <th>Remove</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @memberships.each do |membership| %>
+      <tr>
+        <td><%= membership.user.email %></td>
+        <td>
+          <% if membership.admin? %>
+            Admin
+          <% else %>
+            Member
+          <% end %>
+        </td>
+        <% if @organization.admin?(current_user) %>
+          <td>
+            <% unless membership.user == current_user %>
+              <%= form_with url: organization_membership_path(@organization, membership), method: :patch, local: true do |f| %>
+                <%= hidden_field_tag :role, membership.admin? ? :member : :admin %>
+                <%= f.submit membership.admin? ? "Make Member" : "Make Admin" %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <% unless membership.user == current_user %>
+              <%= button_to "Remove", organization_membership_path(@organization, membership), method: :delete, data: { confirm: "削除しても問題ないですか？" } %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
