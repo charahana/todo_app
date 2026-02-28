@@ -16,16 +16,19 @@ class MembershipsController < ApplicationController
   def update
     membership = @organization.memberships.find(params[:id])
     if membership.update(role: params[:role])
-      redirect_to organization_memberships_path(@organization)
+      redirect_to organization_memberships_path(@organization), notice: "更新しました"
     else
-      redirect_to organization_memberships_path(@organization), alert: "Update failed"
+      redirect_to organization_memberships_path(@organization), alert: membership.errors.full_messages.to_sentence
     end
   end
 
   def destroy
     membership = @organization.memberships.find(params[:id])
-    membership.destroy
-    redirect_to @organization, notice: "ユーザーを削除しました"
+    if membership.destroy
+      redirect_to organization_memberships_path(@organization), notice: "ユーザーを削除しました"
+    else
+      redirect_to organization_memberships_path(@organization), alert: membership.errors.full_messages.to_sentence
+    end
   end
 
   private
