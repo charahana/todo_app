@@ -40,4 +40,28 @@ RSpec.describe "Memberships", type: :request do
       expect(organization.users).not_to include(member_user)
     end
   end
+
+  describe "last admin protection (request spec)" do
+    context "when only one admin exists" do
+      it "does not allow deleting the last admin" do
+        membership = organization.memberships.find_by(user: admin_user)
+  
+        expect {
+          delete organization_membership_path(organization, membership)
+        }.not_to change { organization.memberships.count }
+  
+        expect(response).to redirect_to(organization_memberships_path(organization))
+        expect(flash[:alert]).to be_present
+      end
+  
+      it "does not allow demoting the last admin" do
+        membership = organization.memberships.find_by(user: admin_user)
+  
+        patch organization_membership_path(organization, membership), params: { role: :member }
+  
+        expect(membership.reload.admin?).to be true
+        expect(flash[:alert]).to be_present
+      end
+    end
+  end
 end
