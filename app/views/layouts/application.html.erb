@@ -21,7 +21,7 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-              <% if user_signed_in? && current_organization&.admin?(current_user) %>
+              <% if user_signed_in? %>
                 <li class="nav-item">
                   <%= link_to 'アバウト', about_path, class: "nav-link text-white" %>
                 </li>
@@ -37,6 +37,11 @@
                 <li class="nav-item">
                   <%= link_to 'タスク一覧', tasks_path, class: "nav-link text-white" %>
                 </li>
+                <% if current_organization&.admin?(current_user) %>
+                  <li class="nav-item">
+                    <%= link_to "メンバー管理", organization_memberships_path(current_organization), class: "nav-link text-white" %>
+                  </li>
+                <% end %>
                 <li class="nav-item">
                   <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "nav-link text-white" %>
                 </li>
