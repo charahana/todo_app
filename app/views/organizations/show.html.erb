@@ -1,0 +1,18 @@
+<h1><%= @organization.name %></h1>
+<h2>メンバー一覧</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ユーザー</th>
+      <th>権限</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @memberships.each do |membership| %>
+        <tr>
+          <td><%= membership.user.email %></td>
+          <td><%= membership.role %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

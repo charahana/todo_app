@@ -18,6 +18,11 @@ class OrganizationsController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     render :new
   end
+
+  def show
+    @organization = current_user.organizations.find_by(params[:id])
+    @memberships = @organization.memberships.includes(:user)
+  end
   
   private
 
