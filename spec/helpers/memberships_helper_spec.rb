@@ -11,5 +11,21 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe MembershipsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#role_label" do
+    it "returns '管理者' for admin role" do
+      membership = build(:membership, role: :admin)
+      expect(helper.role_label(membership)).to eq("管理者")
+    end
+
+    it "returns 'メンバー' for member role" do
+      membership = build(:membership, role: :member)
+      expect(helper.role_label(membership)).to eq("メンバー")
+    end
+  end
+end
+
+module MembershipsHelper
+  def role_label(membership)
+    membership.admin? ? "管理者" : "メンバー"
+  end
 end

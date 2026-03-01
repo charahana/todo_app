@@ -11,5 +11,16 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe OrganizationsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#organization_name" do
+    it "returns the organization name" do
+      org = build(:organization, name: "TodoApp")
+      expect(helper.organization_name(org)).to eq("TodoApp")
+    end
+  end
+end
+
+module OrganizationsHelper
+  def organization_name(org)
+    org.name
+  end
 end
