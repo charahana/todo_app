@@ -1,16 +1,27 @@
 class OrganizationsController < ApplicationController
+  before_action :authenticate_user!
 
   def index
-    @organizations = Organization.all
+    @organizations = current_user.organizations
   end
   
+  def new
+    @organization = Organization.new
+  end
+
   def create
     @organization = Organization.new(organization_params)
-    if @organization.save
-      @organization.memberships.create(user: current_user, role: :admin)
-      redirect_to @organization, notice: "作成しました"
-    else
-      render :new, status: :unprocessable_entity
+    ActiveRecord::base.transaction do
+      @organization.memberships.create!(user: current_user, role: :admin)
     end
+    redirect_to organizations_path, notice: "組織を作成しました"
+  rescue ActiveRecord::RecordInvalid
+    render :new
+  end
+  
+  private
+
+  def organization_params
+    params.require(:organization).permit(:name)
   end
 end
