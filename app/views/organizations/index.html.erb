@@ -1,1 +1,18 @@
-<h1>仮ページ</h1>
+<h1>組織一覧</h1>
+<%= link_to "新規組織作成", new_organization_path %>
+<table>
+  <thead>
+    <tr>
+      <th>組織名</th>
+      <th>あなたの権限</th>
+    </th>
+  </thead>
+  <tbody>
+    <% @organizations.each do |org| %>
+        <tr>
+          <td><%= org.name %></td>
+          <td><%= org.memberships.find_by(user: current_user).role %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
