@@ -19,7 +19,7 @@ RSpec.describe "Memberships", type: :request do
 
   describe "POST /create" do
     it "adds a new member" do
-      post organization_memberships_path(organization), params: { user_id: member_user.id, role: :member }
+      post organization_memberships_path(organization), params: { membership: { user_id: member_user.id, role: :member } }
       expect(organization.users).to include(member_user)
       expect(response).to redirect_to(organization_memberships_path(organization))
     end
@@ -28,7 +28,10 @@ RSpec.describe "Memberships", type: :request do
   describe "PATCH /update" do
     it "updates role" do
       membership = organization.memberships.create(user: member_user, role: :member)
-      patch organization_membership_path(organization, membership), params: { role: :admin }
+  
+      patch organization_membership_path(organization, membership),
+            params: { membership: { role: :admin } }
+  
       expect(membership.reload.admin?).to be true
     end
   end
@@ -36,8 +39,10 @@ RSpec.describe "Memberships", type: :request do
   describe "DELETE /destroy" do
     it "removes member" do
       membership = organization.memberships.create(user: member_user, role: :member)
-      delete organization_membership_path(organization, membership)
-      expect(organization.users).not_to include(member_user)
+  
+      expect {
+        delete organization_membership_path(organization, membership)
+      }.to change { organization.memberships.count }.by(-1)
     end
   end
 
@@ -57,7 +62,7 @@ RSpec.describe "Memberships", type: :request do
       it "does not allow demoting the last admin" do
         membership = organization.memberships.find_by(user: admin_user)
   
-        patch organization_membership_path(organization, membership), params: { role: :member }
+        patch organization_membership_path(organization, membership),params: { membership: { role: :member } }
   
         expect(membership.reload.admin?).to be true
         expect(flash[:alert]).to be_present

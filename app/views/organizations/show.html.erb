@@ -16,3 +16,19 @@
     <% end %>
   </tbody>
 </table>
+<% if @organization.memberships.find_by(user: current_user).admin? %>
+  <hr>
+  <h3>メンバー追加</h3>
+  <%= form_with model: [@organization, @membership] do |f| %>
+    <div>
+      <%= f.label :user_id, "ユーザー" %>
+      <%= f.collection_select :user_id, User.all, :id, :email %>
+    </div>
+    <div>
+      <%= f.label :role %>
+      <%= f.select :role, Membership.roles.keys %>
+    </div>
+    <%= f.submit "追加" %>
+  <% end %>
+<% end %>
+<%= link_to "一覧に戻る", organizations_path %>

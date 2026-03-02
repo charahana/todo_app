@@ -11,7 +11,8 @@ class OrganizationsController < ApplicationController
 
   def create
     @organization = Organization.new(organization_params)
-    ActiveRecord::base.transaction do
+    ActiveRecord::Base.transaction do
+      @organization.save!
       @organization.memberships.create!(user: current_user, role: :admin)
     end
     redirect_to organizations_path, notice: "組織を作成しました"
@@ -20,8 +21,9 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @organization = current_user.organizations.find_by(params[:id])
+    @organization = current_user.organizations.find(params[:id])
     @memberships = @organization.memberships.includes(:user)
+    @membership = @organization.memberships.new
   end
   
   private
