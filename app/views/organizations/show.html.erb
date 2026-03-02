@@ -10,7 +10,7 @@
   <tbody>
     <% @memberships.each do |membership| %>
         <tr>
-          <td><%= membership.user.email %></td>
+          <td><%= membership.user.name %></td>
           <td><%= membership.role %></td>
         </tr>
     <% end %>

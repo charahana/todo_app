@@ -1,5 +1,6 @@
 class OrganizationsController < ApplicationController
   before_action :authenticate_user!
+  before_action :authorize_admin!, only: [:destroy]
 
   def index
     @organizations = current_user.organizations
@@ -25,10 +26,27 @@ class OrganizationsController < ApplicationController
     @memberships = @organization.memberships.includes(:user)
     @membership = @organization.memberships.new
   end
+
+  def destroy
+    if current_user.organizations.count == 1
+      redirect_to organizations_path, alert: "最後の組織は削除できません"
+      return
+    end
+    if @organization.destroy
+      redirect_to organizations_path, notice: "組織を削除しました"
+    else
+      redirect_to organizations_path, alert: @organization.errors.full_messages.to_sentence
+    end
+  end
   
   private
 
   def organization_params
     params.require(:organization).permit(:name)
+  end
+
+  def authorize_admin!
+    membership = @organization.memberships.find_by(user: current_user)
+    redirect_to @organization, alert: "権限がありません" unless membership&.admin?
   end
 end
