@@ -1,18 +1,42 @@
-<h1>組織一覧</h1>
-<%= link_to "新規組織作成", new_organization_path %>
-<table>
-  <thead>
-    <tr>
-      <th>組織名</th>
-      <th>あなたの権限</th>
-    </th>
-  </thead>
-  <tbody>
-    <% @organizations.each do |org| %>
-        <tr>
-          <td><%= org.name %></td>
-          <td><%= org.memberships.find_by(user: current_user).role %></td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">組織一覧</h1>
+    <%= link_to "新規組織作成", new_organization_path, class: "btn btn-primary" %>
+  </div>
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>組織名</th>
+            <th>あなたの権限</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @organizations.each do |org| %>
+            <% membership = org.memberships.find_by(user: current_user) %>
+            <tr>
+              <td class="fw-bold"><%= link_to org.name, organization_path(org), class: "text-decoration-none" %></td>
+              <td>
+                <% if membership.admin? %>
+                  <span class="badge bg-danger">管理者</span>
+                <% else %>
+                  <span class="badge bg-secondary">メンバー</span>
+                <% end %>
+              </td>
+              <td class="text-end">
+                <%= link_to "詳細", organization_path(org), class: "btn btn-sm btn-outline-primary" %>
+              </td>
+            </tr>
+          <% end %>
+          <% if @organizations.empty? %>
+            <tr>
+              <td colspan="3" class="text-center text-muted py-4">所属している組織がありません</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
