@@ -1,34 +1,62 @@
-<h1><%= @organization.name %></h1>
-<h2>メンバー一覧</h2>
-<table>
-  <thead>
-    <tr>
-      <th>ユーザー</th>
-      <th>権限</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @memberships.each do |membership| %>
-        <tr>
-          <td><%= membership.user.name %></td>
-          <td><%= membership.role %></td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
-<% if @organization.memberships.find_by(user: current_user).admin? %>
-  <hr>
-  <h3>メンバー追加</h3>
-  <%= form_with model: [@organization, @membership] do |f| %>
-    <div>
-      <%= f.label :user_id, "ユーザー" %>
-      <%= f.collection_select :user_id, User.all, :id, :email %>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1  class="mb-0"><%= @organization.name %></h1>
+    <%= link_to "一覧に戻る", organizations_path, class: "btn btn-outline-secondary" %>
+  </div>
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-light">
+      <h5 class="mb-0">メンバー一覧</h5>
     </div>
-    <div>
-      <%= f.label :role %>
-      <%= f.select :role, Membership.roles.keys %>
+    <div class="card-body p-0">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>ユーザー</th>
+            <th>権限</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @memberships.each do |membership| %>
+            <tr>
+              <td class="fw-semibold"><%= membership.user.name.presence || membership.user.email %></td>
+              <td>
+                <% if membership.admin? %>
+                  <span class="badge bg-danger">管理者</span>
+                <% else %>
+                  <span class="badge bg-secondary">メンバー</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          <% if @memberships.empty? %>
+            <tr>
+              <td colspan="2" class="text-center text-muted py-4">メンバーが存在しません</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-    <%= f.submit "追加" %>
+  </div>
+  <% if @organization.memberships.find_by(user: current_user).admin? %>
+    <div class="card shadow-sm">
+      <div class="card-header bg-light">
+        <h5 class="mb-0">メンバー追加</h5>
+      </div>
+      <div class="card-body">
+        <%= form_with model: [@organization, @membership], class: "row g-3" do |f| %>
+          <div class="col-md-6">
+            <%= f.label :user_id, "ユーザー", class: "form-label" %>
+            <%= f.collection_select :user_id, User.all, :id, :email, {}, class: "form-select" %>
+          </div>
+          <div class="col-md-2 d-flex align-items-end">
+            <%= f.label :role, "権限", class: "form-label" %>
+            <%= f.select :role, Membership.roles.keys.map { |r| [r.humanize, r] }, {}, class: "form-select" %>
+          </div>
+          <div class="col-md-2 d-flex align-items-end">
+            <%= f.submit "追加", class: "btn btn-primary w-100" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   <% end %>
-<% end %>
-<%= link_to "一覧に戻る", organizations_path %>
+</div>
