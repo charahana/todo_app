@@ -23,11 +23,11 @@
     </div>
     <div class="mb-3">
       <%= f.label :status, "ステータス", class: "form-label" %>
-      <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] },{}, class: "form-select" %>
+      <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] },{}, class: "form-control" %>
     </div>
     <div class="mb-3">
       <%= f.label :priority, "優先度", class: "form-label" %>
-      <%= f.select :priority, Task.priorities.keys.map { |k| [I18n.t("enums.task.priority.#{k}"), k] }, {}, class: "form-select" %>
+      <%= f.select :priority, Task.priorities.keys.map { |k| [I18n.t("enums.task.priority.#{k}"), k] }, {}, class: "form-control" %>
     </div>
     <div class="mb-3">
       <%= f.label :due_date, "期限", class: "form-label" %>
@@ -35,7 +35,7 @@
     </div>
     <div class="mb-3">
       <%= f.label :image, "画像", class: "form-label" %>
-      <%= file_field :image, accept: "image/*", class: "form-control" %>
+      <%= f.file_field :image, accept: "image/*", class: "form-control" %>
     </div>
     <div class="d-flex justify-content-between">
       <%= link_to "戻る", tasks_path, class: "btn btn-outline-secondary" %>
