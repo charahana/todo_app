@@ -27,7 +27,11 @@ class Task < ApplicationRecord
   }
 
   scope :search, -> (keyword) {
-    where("title LIKE ? OR body LIKE ?", "%#{keyword}%", "%#{keyword}%") if keyword.present?
+    if keyword.present?
+      where("title LIKE ? OR body LIKE ?", "%#{keyword}%", "%#{keyword}%")
+    else
+      all
+    end
   }
 
   scope :filter_status, -> (status) {
