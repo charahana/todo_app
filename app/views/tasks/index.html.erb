@@ -35,9 +35,9 @@
     <tbody>
       <% @tasks.each_with_index do |task, index| %>
         <tr class="task-row <%= 'table-danger' if task.overdue? %>">
-          <td><%= index + 1 %></td>
+          <td><%= (@tasks.current_page - 1) * @tasks.limit_value + index + 1 %></td>
           <td><%= link_to task.title, task_path(task, from: "index"), class: "font-weight-bold text-dark" %></td>
-          <td><%= task.body %></td>
+          <td><%= truncate(task.body, length:50) %></td>
           <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
           <td><%= I18n.t("enums.task.priority.#{task.priority}") %></td>
           <td><%= task.due_date&.strftime("%Y/%m/%d") || "未設定" %></td>
