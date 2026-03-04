@@ -7,14 +7,14 @@
       <p><strong>優先度:</strong><span class="badge badge-warning"><%= I18n.t("enums.task.priority.#{@task.priority}") %></span></p>
       <p>
         <strong>期限:</strong>
-        <span class="<%= 'text-danger font-weight-bold' if @task.due_date.present? && @task.due_date < Time.current %>">
+        <span class="<%= 'text-danger font-weight-bold' if @task.overdue? %>">
           <%= @task.due_date&.strftime("%Y/%m/%d %H:%M") || "未設定" %>
         </span>
       </p>
       <% if @task.image.attached? %>
         <%= image_tag @task.image, size: "200x200" %>
       <% else %>
-        <%= image_tag 'no_image', size: "200x200" %>
+        <%= image_tag 'no_image.jpg', size: "200x200" %>
       <% end %>
     </div>
   </div>
