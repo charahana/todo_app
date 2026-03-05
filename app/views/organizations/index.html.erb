@@ -19,7 +19,7 @@
             <tr>
               <td class="fw-bold"><%= link_to org.name, organization_path(org), class: "text-decoration-none" %></td>
               <td>
-                <% if membership.admin? %>
+                <% if membership&.admin? %>
                   <span class="badge bg-danger">管理者</span>
                 <% else %>
                   <span class="badge bg-secondary">メンバー</span>
