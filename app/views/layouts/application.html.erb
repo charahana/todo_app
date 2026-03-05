@@ -34,6 +34,9 @@
                 <li class="nav-item">
                   <%= link_to 'タスク一覧', tasks_path, class: "nav-link text-white" %>
                 </li>
+                <li class="nav-item">
+                  <%= link_to '組織一覧', organizations_path, class: "nav-link text-white" %>
+                </li>
                 <% if current_organization.present? && current_organization.memberships.find_by(user: current_user)&.admin? %>
                   <li class="nav-item">
                     <%= link_to "メンバー管理", organization_memberships_path(current_organization), class: "nav-link text-white" %>
