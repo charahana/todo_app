@@ -16,7 +16,7 @@ class OrganizationsController < ApplicationController
       @organization.save!
       @organization.memberships.create!(user: current_user, role: :admin)
     end
-    redirect_to organizations_path, notice: "組織を作成しました"
+    redirect_to organization_path(@organization), notice: "組織を作成しました"
   rescue ActiveRecord::RecordInvalid
     render :new
   end
