@@ -1,0 +1,26 @@
+<div class="container mt-5" style="max-width: 600px;">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="mb-4">新しい組織を作る</h2>
+      <%= form_with model: @organization, local: true do |f| %>
+        <% if @organization.errors.any? %>
+          <div class="alert alert-danger">
+            <ul class="mb-0">
+              <% @organization.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="mb-3">
+          <%= f.label :name, "組織名", class: "form-label" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "例: 開発チーム" %>
+        </div>
+        <div class="d-flex justify-content-between">
+          <%= link_to "戻る", organizations_path, class: "btn btn-outline-secondary" %>
+          <%= f.submit "作成", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
