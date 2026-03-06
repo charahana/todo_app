@@ -115,4 +115,28 @@ RSpec.describe "Organizations", type: :request do
       expect(flash[:alert]).to be_present
     end
   end
+
+  describe "POST /organizations" do
+    before { sign_in admin_user }
+  
+    it "creates a new organization" do
+      expect {
+        post organizations_path,
+             params: { organization: { name: "NewOrg" } }
+      }.to change(Organization, :count).by(1)
+  
+      expect(response).to redirect_to(organization_path(Organization.last))
+    end
+  
+    it "adds creator as admin member" do
+      post organizations_path,
+           params: { organization: { name: "NewOrg" } }
+  
+      organization = Organization.last
+      membership = organization.memberships.find_by(user: admin_user)
+  
+      expect(membership).to be_present
+      expect(membership.admin?).to be true
+    end
+  end
 end
