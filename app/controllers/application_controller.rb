@@ -18,7 +18,13 @@ class ApplicationController < ActionController::Base
 
   def current_organization
     return nil unless user_signed_in?
-    @current_organization ||= current_user.organizations.first
+    @current_organization ||= begin
+      if session[:organization_id]
+        current_user.organizations.find_by(id: session[:organization_id])
+      else
+        current_user.organizations.first
+      end
+    end
   end
   helper_method :current_organization
 end

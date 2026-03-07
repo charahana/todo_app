@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :dashboard, only: [:index]
   resources :organizations do
     resources :memberships, only: [:index, :create, :update, :destroy]
+    post :switch, on: :member
   end
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

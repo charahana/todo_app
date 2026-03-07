@@ -38,6 +38,12 @@ class OrganizationsController < ApplicationController
       redirect_to organizations_path, alert: @organization.errors.full_messages.to_sentence
     end
   end
+
+  def switch
+    organization = current_user.organizations.find(params[:id])
+    session[:organization_id] = organization.id
+    redirect_to organization_path(organization), notice: "組織を切り替えました"
+  end
   
   private
 

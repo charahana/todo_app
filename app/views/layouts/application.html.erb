@@ -22,6 +22,20 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
               <% if user_signed_in? %>
+                <li class="nav-item dropdown">
+                  <button class="btn btn-outline-light dropdown-toggle mx-2" data-toggle="dropdown">
+                    <%= current_organization&.name || "組織選択"%>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <% current_user.organizations.each do |org| %>
+                      <li>
+                        <%= button_to org.name, switch_organization_path(org), method: :post, class: "dropdown-item" %>
+                      </li>
+                    <% end %>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><%= link_to "新しい組織", new_organization_path, class: "dropdown-item" %></li>
+                  </ul>
+                </li>
                 <li class="nav-item">
                   <%= link_to 'アバウト', about_path, class: "nav-link text-white" %>
                 </li>
