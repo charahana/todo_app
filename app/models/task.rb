@@ -27,6 +27,10 @@ class Task < ApplicationRecord
     where(due_date: Time.current..3.days.from_now)
   }
 
+  scope :overdue, -> {
+    where("due_date < ? AND status != ?", Date.today, "done")
+  }
+
   scope :search, -> (keyword) {
     if keyword.present?
       where("title LIKE ? OR body LIKE ?", "%#{keyword}%", "%#{keyword}%")
