@@ -28,7 +28,7 @@ class Task < ApplicationRecord
   }
 
   scope :overdue, -> {
-    where("due_date < ? AND status != ?", Date.today, "done")
+    where("due_date < ?", Time.current).where.not(status: statuses[:done])
   }
 
   scope :search, -> (keyword) {
