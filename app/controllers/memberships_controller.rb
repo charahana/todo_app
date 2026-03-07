@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_organization
-  before_action :authorize_admin!, only: [:create, :destroy, :update]
+  before_action :authorize_admin!
 
   def index
     @memberships = @organization.memberships.includes(:user)
@@ -9,7 +9,6 @@ class MembershipsController < ApplicationController
 
   def create
     @membership = @organization.memberships.new(membership_params)
-
     if @membership.save
       redirect_to organization_memberships_path(@organization), notice: "メンバーを追加しました"
     else
@@ -19,12 +18,10 @@ class MembershipsController < ApplicationController
 
   def update
     membership = @organization.memberships.find(params[:id])
-
     if membership.update(membership_params)
       redirect_to organization_memberships_path(@organization), notice: "更新しました"
     else
-      redirect_to organization_memberships_path(@organization),
-                  alert: membership.errors.full_messages.to_sentence
+      redirect_to organization_memberships_path(@organization), alert: membership.errors.full_messages.to_sentence
     end
   end
 
