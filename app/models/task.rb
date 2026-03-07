@@ -24,7 +24,7 @@ class Task < ApplicationRecord
   }
 
   scope :due_soon, -> {
-    where(due_date: Time.current..3.days.from_now)
+    where(due_date: Time.current..3.days.from_now).where.not(status: :done)
   }
 
   scope :overdue, -> {
