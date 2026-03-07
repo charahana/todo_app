@@ -5,5 +5,6 @@ FactoryBot.define do
     status { :not_started }
     priority { :low }
     association :user
+    association :organization
   end
 end
