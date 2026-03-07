@@ -19,6 +19,7 @@ class OrganizationsController < ApplicationController
     end
     redirect_to organization_path(@organization), notice: "組織を作成しました"
   rescue ActiveRecord::RecordInvalid
+    flash.now[:alert] = "組織の作成に失敗しました"
     render :new
   end
 
