@@ -1,5 +1,6 @@
 class Task < ApplicationRecord
   belongs_to :user
+  belongs_to :organization
   has_one_attached :image
 
   enum status: {not_started: 0, in_progress:1, done: 2}
