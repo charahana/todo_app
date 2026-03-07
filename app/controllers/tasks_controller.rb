@@ -9,6 +9,7 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.build(task_params)
     @task.user = current_user
+    @task.organization = current_user.organizations.first
     if @task.save
       flash[:notice] = "タスクを作成しました"
       redirect_to tasks_path
