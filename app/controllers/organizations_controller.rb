@@ -1,5 +1,6 @@
 class OrganizationsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_organization, only: [:show, :destroy, :switch]
   before_action :authorize_admin!, only: [:destroy]
 
   def index
@@ -22,7 +23,6 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @organization = current_user.organizations.find(params[:id])
     @memberships = @organization.memberships.includes(:user)
     @membership = @organization.memberships.new
   end
@@ -40,12 +40,15 @@ class OrganizationsController < ApplicationController
   end
 
   def switch
-    organization = current_user.organizations.find(params[:id])
     session[:organization_id] = organization.id
     redirect_to organization_path(organization), notice: "組織を切り替えました"
   end
   
   private
+
+  def set_organization
+    @organization = current_user.organizations.find(params[:id])
+  end
 
   def organization_params
     params.require(:organization).permit(:name)
