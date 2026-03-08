@@ -8,8 +8,7 @@ class TasksController < ApplicationController
 
   def create
     @task = current_user.tasks.build(task_params)
-    @task.user = current_user
-    @task.organization = current_user.organizations.first
+    @task.organization = current_organization
     if @task.save
       flash[:notice] = "タスクを作成しました"
       redirect_to tasks_path
@@ -27,11 +26,11 @@ class TasksController < ApplicationController
 
     case params[:sort]
     when "due_date"
-      @tasks = @tasks.order(due_date: :asc)
+      @tasks = @tasks.due_date_asc
     when "priority"
-      @tasks = @tasks.order(priority: :desc)
+      @tasks = @tasks.priority_desc
     else
-      @tasks = @tasks.order(created_at: :desc)
+      @tasks = @tasks.recent
     end
 
     @tasks = @tasks.page(params[:page]).per(10)
@@ -64,7 +63,7 @@ class TasksController < ApplicationController
     if @task.destroy
       flash[:notice] = "タスクを削除しました"
     else
-      flash.now[:alert] = "削除できませんでした"
+      flash[:alert] = "削除できませんでした"
     end
     redirect_to tasks_path
   end
