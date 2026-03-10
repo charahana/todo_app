@@ -22,6 +22,10 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
               <% if user_signed_in? %>
+                <li class="nav-item d-flex align-items-center fw-bold mx-2" style="color: #ffd54f">
+                  <i class="fa-solid fa-user me-1"></i>
+                  <%= current_user.name %>
+                </li>
                 <li class="nav-item dropdown">
                   <button class="btn btn-outline-light dropdown-toggle mx-2" data-toggle="dropdown">
                     <%= current_organization&.name || "組織選択"%>
