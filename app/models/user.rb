@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :organizations, through: :memberships
+  has_many :comments, dependent: :destroy
   has_one_attached :profile_image
 
   validates :name, presence: true, length: { maximum: 50 }
