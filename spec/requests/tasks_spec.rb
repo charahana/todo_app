@@ -60,4 +60,37 @@ RSpec.describe "Tasks", type: :request do
       end
     end
   end
+
+  describe "POST /tasks/:task_id/comments" do
+    let(:user) { create(:user) }
+    let(:task) { create(:task, user: user) }
+  
+    before do
+      sign_in user
+    end
+  
+    it "コメントを投稿できる" do
+      expect {
+        post task_comments_path(task), params: {
+          comment: { body: "テストコメント" }
+        }
+      }.to change(Comment, :count).by(1)
+    end
+  end
+
+  describe "DELETE /tasks/:task_id/comments/:id" do
+    let(:user) { create(:user) }
+    let(:task) { create(:task, user: user) }
+    let!(:comment) { create(:comment, task: task, user: user) }
+  
+    before do
+      sign_in user
+    end
+  
+    it "コメントを削除できる" do
+      expect {
+        delete task_comment_path(task, comment)
+      }.to change(Comment, :count).by(-1)
+    end
+  end
 end
