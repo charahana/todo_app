@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :tasks, only: [:new, :create, :index, :show, :edit, :update, :destroy]
+  resources :tasks, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
+    resources :comments, only: [:create, :destroy]
+  end
   resources :users, only: [:show, :edit, :update]
   resources :dashboard, only: [:index]
   resources :organizations do
