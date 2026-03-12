@@ -17,6 +17,24 @@
     <p class="text-success">期限切れタスクはありません</p>
   <% end %>
 
+  <% if @due_soon_tasks.any? %>
+    <div class="card border-warning mb-4">
+      <div class="card-body">
+        <h5 class="text-warning">期限が近いタスク</h5>
+        <ul>
+          <% @due_soon_tasks.each do |task| %>
+            <li>
+              <%= link_to task.title, task_path(task, from: "dashboard"), class: "text-decoration-none" %>
+              <small class="text-muted">
+                (期限: <%= formatted_date(task.due_date) %>)
+              </small>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
   <div class="row text-center mb-5">
     <div class="col-md-3 mb-3">
       <div class="card shadow-sm p-4 h-100">
