@@ -6,24 +6,24 @@
     <div class="card border-danger mb-4">
       <div class="card-body">
         <h5 class="text-danger">期限切れタスク</h5>
-        <ul>
+        <ul class="list-group list-group-flush">
           <% @overdue_tasks.each do |task| %>
-            <li class="text-danger"><%= link_to task.title, task_path(task, from: "dashboard"), class: "text-decoration-none" %></li>
+            <li class="list-group-item text-danger"><%= link_to task.title, task_path(task, from: "dashboard"), class: "text-decoration-none" %></li>
           <% end %>
         </ul>
       </div>
     </div>
   <% else %>
-    <p class="text-success">期限切れタスクはありません</p>
+    <p class="text-muted">期限切れタスクはありません</p>
   <% end %>
 
   <% if @due_soon_tasks.any? %>
     <div class="card border-warning mb-4">
       <div class="card-body">
         <h5 class="text-warning">期限が近いタスク</h5>
-        <ul>
+        <ul class="list-group list-group-flush">
           <% @due_soon_tasks.each do |task| %>
-            <li>
+            <li class="list-group-item">
               <%= link_to task.title, task_path(task, from: "dashboard"), class: "text-decoration-none" %>
               <small class="text-muted">
                 (期限: <%= formatted_date(task.due_date) %>)
@@ -72,20 +72,19 @@
   </div>
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <h5 class="mb-3">最近のタスク</h5>
-        <% if @recent_tasks.any? %>
-          <ul class="list-group list-group-flush">
-            <% @recent_tasks.each do |task| %>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span><%= link_to task.title, task_path(task, from: "dashboard"), class: "text-decoration-none" %></span>
-                <small class="text-muted"><%= formatted_date(task.created_at) %></small>
-              </li>
-            <% end %>
-          </ul>
-        <% else %>
-          <p class="text-muted">最近追加されたタスクはありません</p>
-        <% end %>
-      </div>
+      <h5 class="mb-3">最近のタスク</h5>
+      <% if @recent_tasks.any? %>
+        <ul class="list-group list-group-flush">
+          <% @recent_tasks.each do |task| %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><%= link_to task.title, task_path(task, from: "dashboard"), class: "text-decoration-none" %></span>
+              <small class="text-muted"><%= formatted_date(task.created_at) %></small>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-muted">最近追加されたタスクはありません</p>
+      <% end %>
     </div>
   </div>
 </div>
