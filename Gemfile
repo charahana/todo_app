@@ -59,3 +59,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'image_processing', '~> 1.2'
 gem 'kaminari'
+gem 'devise-i18n'
