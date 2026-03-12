@@ -38,7 +38,11 @@
           <td><%= (@tasks.current_page - 1) * @tasks.limit_value + index + 1 %></td>
           <td><%= link_to task.title, task_path(task, from: "index"), class: "font-weight-bold text-dark" %></td>
           <td><%= truncate(task.body, length:50) %></td>
-          <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
+          <td>
+            <span class="badge <%= status_badge_class(task.status) %>">
+              <%= I18n.t("enums.task.status.#{task.status}") %>
+            </span>
+          </td>
           <td><%= I18n.t("enums.task.priority.#{task.priority}") %></td>
           <td><%= task.due_date&.strftime("%Y/%m/%d") || "未設定" %></td>
           <td><%= link_to "編集", edit_task_path(task), class: "btn btn-sm btn-primary" %></td>
